@@ -5,3 +5,5 @@
 *.swp
 *.rds
 _targets/
+report/*.html
+report/figures/

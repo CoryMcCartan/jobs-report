@@ -1,5 +1,6 @@
 library(here)
 library(targets)
+library(tarchetypes)
 
 invisible(lapply(Sys.glob(here("R/*.R")), source))
 
@@ -17,5 +18,6 @@ list(
                packages=c(tar_option_get("packages"), "fredr", "rvest"),
                format="file"),
     tar_target(jobs_model, fit_model(jobs_data),
-               packages=c(tar_option_get("packages"), "rstanarm"))
+               packages=c(tar_option_get("packages"), "rstanarm")),
+    tar_render(jobs_report, here("report/jobs_report.Rmd"))
 )
