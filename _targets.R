@@ -1,4 +1,4 @@
-library(here)
+suppressMessages(library(here))
 library(targets)
 library(tarchetypes)
 

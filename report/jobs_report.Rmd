@@ -10,7 +10,7 @@ images:
 
 ```{r setup, include=FALSE}
 knitr::opts_knit$set(root.dir=here::here())
-knitr::opts_chunk$set(echo=FALSE, message=FALSE, 
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE,
                       fig.path="figures/", fig.retina=2,
                       dev.args=list(bg="transparent"), dev="ragg_png")
 
