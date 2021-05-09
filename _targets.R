@@ -13,7 +13,9 @@ list(
                packages=c(tar_option_get("packages"), "rvest")),
     tar_target(release, release_schedule[which.max(Sys.Date() < release_schedule)]),
     tar_target(benchmark_file, here("data/benchmark_revision.csv"), format="file"),
-    tar_target(jobs_data, get_data(release=release, bench_path=benchmark_file),
-               packages=c(tar_option_get("packages"), "fredr", "rvest")),
-    tar_target(jobs_data_output, save_data(jobs_data), format="file")
+    tar_target(jobs_data, update_data(release=release, bench_path=benchmark_file),
+               packages=c(tar_option_get("packages"), "fredr", "rvest"),
+               format="file"),
+    tar_target(jobs_model, fit_model(jobs_data),
+               packages=c(tar_option_get("packages"), "rstanarm"))
 )

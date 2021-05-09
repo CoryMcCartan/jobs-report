@@ -85,26 +85,21 @@ get_rev_data = function(years=2003:2020,
 #' @param ... passed on to [get_fred_data()] and [get_rev_data()]
 #'
 #' @returns A data frame
-get_data = function(...) {
+update_data = function(path=here("data/jobs.csv"), ...) {
     fred_d = get_fred_data()
 
     finalized = filter(fred_d, month == 2) %>%
         pull(year) %>%
-        head(-1)
+        head(-1) %>%
+        c(2003)
     revs = get_rev_data(years=finalized)
 
-    left_join(fred_d, revs$ces, by=c("date", "year", "month")) %>%
+    d = left_join(fred_d, revs$ces, by=c("date", "year", "month")) %>%
         select(-final) %>%
         rename(nfp_init_chg = initial) %>%
-        mutate(finalized = year %in% finalized & (n() - row_number()) > 3)
-}
+        mutate(finalized = year %in% finalized & (n() - row_number()) > 3) %>%
+        select(date, nfp, nfp_chg, nfp_init_chg, adp, adp_chg, claims, finalized)
 
-#' Save jobs data
-#'
-#' @param d the data, from [load_data()]
-#' @param path the location to save
-save_data = function(d, path=here("data/jobs.csv")) {
-    select(d, date, nfp, nfp_chg, nfp_init_chg, adp, adp_chg, claims) %>%
-        write_csv(path)
+    write_csv(d, path)
     invisible(path)
 }
