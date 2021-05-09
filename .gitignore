@@ -1,0 +1,6 @@
+.DS_Store
+.Rproj.user
+*.tmp
+*.bak
+*.swp
+*.rds
