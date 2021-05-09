@@ -7,4 +7,5 @@
 *.rds
 _targets/
 report/*.html
-report/figures/
+report/figures/*.png
+!report/figures/jobs-1.png
