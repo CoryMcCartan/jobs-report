@@ -1,10 +1,11 @@
 #!/usr/bin/env Rscript
-if (!requireNamespace("here", quietly=T)) install.packages("here")
-if (!requireNamespace("targets", quietly=T)) install.packages("targets")
-if (!requireNamespace("remotes", quietly=T)) install.packages("remotes")
-if (!requireNamespace("tarchetypes", quietly=T)) remotes::install_github("ropensci/tarchetypes")
-if (!requireNamespace("stringr", quietly=T)) install.packages("stringr")
-if (!requireNamespace("rmarkdwon", quietly=T)) install.packages("rmarkdown")
+installed = rownames(installed.packages())
+if (!("here" %in% installed)) install.packages("here")
+if (!("targets" %in% installed)) install.packages("targets")
+if (!("remotes" %in% installed)) install.packages("remotes")
+if (!("tarchetypes" %in% installed)) remotes::install_github("ropensci/tarchetypes")
+if (!("stringr" %in% installed)) install.packages("stringr")
+if (!("rmarkdown" %in% installed)) install.packages("rmarkdown")
 
 # For rendering to website
 render_site_proj = function(input, ..., site_path="~/Documents/Code/website/content/projects/") {
@@ -32,7 +33,7 @@ if (length(args) == 0 || args[1] == "help") {
     tmp = tempfile()
     targets::tar_renv(extras=character(0), path=tmp)
     packages = na.omit(str_extract(readLines(tmp), "(?<=library\\()[a-zA-Z-]+"))
-    packages = c(packages, "rmarkdown")
+    packages = c(packages, "distill")
     if (dir.exists(here::here(".github"))) {
         writeLines(packages, dep_file)
         writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor),
@@ -45,11 +46,11 @@ if (length(args) == 0 || args[1] == "help") {
         tmp = tempfile()
         targets::tar_renv(extras=character(0), path=tmp)
         packages = na.omit(str_extract(readLines(tmp), "(?<=library\\()[a-zA-Z-]+"))
-        packages = c(packages, "rmarkdown")
+        packages = c(packages, "distill")
     } else {
         packages = readLines(dep_file)
     }
-    to_install = setdiff(packages, rownames(installed.packages()))
+    to_install = setdiff(packages, installed)
     if (length(to_install) > 0)
         install.packages(to_install)
     else
@@ -59,7 +60,10 @@ if (length(args) == 0 || args[1] == "help") {
     targets::tar_make()
 } else if (args[1] == "render") {
     cat("RENDERING REPORT FOR SITE\n")
-    render_site_proj(here::here("report/jobs_report.Rmd"))
+    if (length(args) > 1)
+        render_site_proj(here::here("report/jobs_report.Rmd"), args[2])
+    else 
+        render_site_proj(here::here("report/jobs_report.Rmd"))
 } else {
     print_usage()
 }

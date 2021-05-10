@@ -38,6 +38,9 @@ jobs:
       FRED_KEY: ${{ secrets.FRED_KEY }}
     steps:
       - uses: actions/checkout@v2
+        with:
+          path: jobs-report
+      - run: cd jobs-report
       - uses: r-lib/actions/setup-r@master
       - uses: r-lib/actions/setup-pandoc@master
 
@@ -52,11 +55,10 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.txt') }}
-          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
+          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-2-
+          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-2-
 
       - name: Query dependencies
-        shell: bash
         run: Rscript run.R deps
 
       - name: Cache packages
@@ -67,7 +69,6 @@ jobs:
           restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
 
       - name: Install packages
-        shell: bash
         run: Rscript run.R install
 
       - name: Check if previous runs exist
@@ -124,3 +125,25 @@ jobs:
           done
           git commit -am "Run pipeline"
           git push origin targets-runs
+
+      - run: cd ..
+      - name: Checkout website
+        if: steps.runs-exist.outcome == 'success'
+        uses: actions/checkout@v2
+        with:
+          repository: CoryMcCartan/website/
+          fetch-depth: 1
+          path: website
+      - run: cd jobs-report
+
+      - name: Make website report
+        run: Rscript run.R render ../website/content/projects
+
+      - name: Deploy website
+        run: |
+          cd ../website
+          git add .
+          git commit -m "render jobs report"
+          git push origin master
+          ./deploy.sh
+
