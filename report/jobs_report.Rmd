@@ -1,0 +1,69 @@
+---
+title: "Better Jobs Numbers"
+description: "BLS employment change, adjusted for statistical noise and more data sources."
+date: 2021-05-09
+output: distill::distill_article
+slug: jobs-report
+images:
+    - ./projects/jobs-report/cover.png
+---
+
+```{r setup, include=FALSE}
+knitr::opts_knit$set(root.dir=here::here())
+knitr::opts_chunk$set(echo=FALSE, message=FALSE, warning=FALSE,
+                      fig.path="figures/", fig.retina=2,
+                      dev.args=list(bg="transparent"), dev="ragg_png")
+
+if (isTRUE(Sys.getenv("FOR_CMC_SITE"))) {
+    knitr::knit_hooks$set(class = function(before, options, envir) {
+      if (before) sprintf("<figure class = '%s'>", options$class) else "</figure>"
+    })
+}
+```
+
+
+```{r message=F}
+library(here)
+library(targets)
+library(wacolors)
+library(scales)
+library(tidyverse)
+library(rstanarm)
+
+source(here("R/model.R"))
+
+PAL = wa_pal("rainier")
+th = theme_minimal(base_family="Overpass", base_size=12) +
+    theme(plot.title=element_text(face="bold"))
+```
+
+```{r jobs, class="w100", layout="l-page", fig.width=8, fig.height=5}
+d = read_csv(tar_read(jobs_data)) 
+m = tar_read(jobs_model)
+pred_d = tail(make_model_d(d), 12)
+
+post = posterior_predict(m, pred_d)
+post_mean = colMeans(post)
+infl = loo_se_inflate(m)
+post_sd = sqrt(rowSums((t(post) - post_mean)^2) / (nrow(post)-1L)) * infl
+tt = qt(0.975, df=length(m$y)-1L)
+pred_d = pred_d %>%
+    mutate(est = 1000*round(post_mean),
+           se = 1000*post_sd) 
+
+ggplot(pred_d, aes(date, est)) +
+    geom_hline(yintercept=0, lty="dashed") +
+    geom_ribbon(aes(ymin=est - tt*se,
+                    ymax=est + tt*se),
+                alpha=0.5) +
+    geom_line() +
+    geom_point(aes(y=1000*nfp_init_chg), col=PAL[2]) +
+    geom_text(aes(label=comma(est)), data=tail(pred_d, 1),
+              hjust=0, nudge_x=1, size=5, family="Overpass", fontface="bold") +
+    scale_x_date(expand=expansion(add=c(0, 50))) +
+    scale_y_continuous("Employment change", labels=comma) +
+    labs(x=NULL, title="Change in Nonfarm Employment",
+         subtitle="Seasonally adjusted and regularized") +
+    th
+```
+

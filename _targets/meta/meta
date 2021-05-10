@@ -1,0 +1,13 @@
+name|type|data|command|depend|seed|path|time|size|bytes|format|iteration|parent|children|seconds|warnings|error
+make_model_d|function|82e62a53a25005eb||||||||||||||
+get_fred_data|function|d9334d9399fac5ec||||||||||||||
+get_rev_data|function|1a02c539305bcb0e||||||||||||||
+loo_se_inflate|function|cf4568164e0e1363||||||||||||||
+post_check|function|493cf731fe15fd72||||||||||||||
+get_data_sched|function|394ab7d898c9bcf5||||||||||||||
+fit_model|function|37e6aed605e2d92b||||||||||||||
+update_data|function|c03c2bc1e71a2396||||||||||||||
+release_schedule|stem|d27a60d99710568b|513e89595f0fdbee|23929c9f0050bd3d|-66868720||t18757.2588072549s|253a8b79276e1ed4|185|rds|vector|||0.985||
+benchmark_file|stem|fbe627b0b4c70257|540616527aa15ad4|4e3739ef91745af0|1693336935|/home/runner/work/jobs-report/jobs-report/data/benchmark_revision.csv|t18757.2103427489s|a18ce3f40eb9a8e3|721|file|vector|||0.002||
+release|stem|23c415d44a0c0587|5982d584708d7fba|1c098c14e5546294|-1132719179||t18757.2588078568s|045b07e719c4cc68|120|rds|vector|||0.002||
+jobs_data|stem||0aaaa06c341b5ed2|16556cc826bcd0e9|-1642950649||||0|file|vector|||0.227||FRED API key must be set. See fredr_set_key.

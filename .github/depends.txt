@@ -1,0 +1,10 @@
+dplyr
+fredr
+here
+lubridate
+purrr
+readr
+rstanarm
+rvest
+tidyr
+rmarkdown
