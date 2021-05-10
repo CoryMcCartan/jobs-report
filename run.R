@@ -1,6 +1,7 @@
 #!/usr/bin/env Rscript
 if (!requireNamespace("here", quietly=T)) install.packages("here")
 if (!requireNamespace("targets", quietly=T)) install.packages("targets")
+if (!requireNamespace("tarchetypes", quietly=T)) install.packages("tarchetypes")
 if (!requireNamespace("stringr", quietly=T)) install.packages("stringr")
 
 # For rendering to website
