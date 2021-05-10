@@ -97,6 +97,7 @@ jobs:
             if (file.exists(source)) file.rename(source, dest)
           }
         shell: Rscript {0}
+        continue-on-error: true
 
       - name: Run targets pipeline
         working-directory: jobs-report
@@ -145,10 +146,12 @@ jobs:
           path: website
 
       - name: Make website report
+        if: steps.runs-exist.outcome == 'success'
         working-directory: jobs-report
         run: Rscript run.R render ../website/content/projects
 
       - name: Deploy website
+        if: steps.runs-exist.outcome == 'success'
         working-directory: website
         run: |
           git add .
