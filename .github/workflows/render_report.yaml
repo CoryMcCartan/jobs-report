@@ -54,8 +54,8 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-2-
-          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-2-
+          key: ${{ runner.os }}-${{ hashFiles('jobs-report/.github/R-version') }}-2-
+          restore-keys: ${{ runner.os }}-${{ hashFiles('jobs-report/.github/R-version') }}-2-
 
       - name: Query dependencies
         working-directory: jobs-report
@@ -65,8 +65,8 @@ jobs:
         uses: actions/cache@v1
         with:
           path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.txt') }}
-          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
+          key: ${{ runner.os }}-${{ hashFiles('jobs-report/.github/R-version') }}-1-${{ hashFiles('jobs-report/.github/depends.txt') }}
+          restore-keys: ${{ runner.os }}-${{ hashFiles('jobs-report/.github/R-version') }}-1-
 
       - name: Install packages
         working-directory: jobs-report
