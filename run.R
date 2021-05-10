@@ -33,7 +33,7 @@ if (length(args) == 0 || args[1] == "help") {
     tmp = tempfile()
     targets::tar_renv(extras=character(0), path=tmp)
     packages = na.omit(str_extract(readLines(tmp), "(?<=library\\()[a-zA-Z-]+"))
-    packages = c(packages, "distill")
+    packages = c(packages, "distill", "ragg")
     if (dir.exists(here::here(".github"))) {
         writeLines(packages, dep_file)
         writeLines(sprintf("R-%i.%i", getRversion()$major, getRversion()$minor),
@@ -46,7 +46,7 @@ if (length(args) == 0 || args[1] == "help") {
         tmp = tempfile()
         targets::tar_renv(extras=character(0), path=tmp)
         packages = na.omit(str_extract(readLines(tmp), "(?<=library\\()[a-zA-Z-]+"))
-        packages = c(packages, "distill")
+        packages = c(packages, "distill", "ragg")
     } else {
         packages = readLines(dep_file)
     }
