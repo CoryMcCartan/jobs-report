@@ -4,6 +4,7 @@ if (!requireNamespace("targets", quietly=T)) install.packages("targets")
 if (!requireNamespace("remotes", quietly=T)) install.packages("remotes")
 if (!requireNamespace("tarchetypes", quietly=T)) remotes::install_github("ropensci/tarchetypes")
 if (!requireNamespace("stringr", quietly=T)) install.packages("stringr")
+if (!requireNamespace("rmarkdwon", quietly=T)) install.packages("rmarkdown")
 
 # For rendering to website
 render_site_proj = function(input, ..., site_path="~/Documents/Code/website/content/projects/") {
