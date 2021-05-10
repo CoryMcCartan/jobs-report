@@ -1,9 +1,7 @@
 name|type|parent|branches|progress
-release_schedule|stem|release_schedule|0|started
-release_schedule|stem|release_schedule|0|built
-benchmark_file|stem|benchmark_file|0|started
-benchmark_file|stem|benchmark_file|0|built
-release|stem|release|0|started
-release|stem|release|0|built
 jobs_data|stem|jobs_data|0|started
-jobs_data|stem|jobs_data|0|errored
+jobs_data|stem|jobs_data|0|built
+jobs_model|stem|jobs_model|0|started
+jobs_model|stem|jobs_model|0|built
+jobs_report|stem|jobs_report|0|started
+jobs_report|stem|jobs_report|0|errored

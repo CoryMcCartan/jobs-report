@@ -7,7 +7,9 @@ post_check|function|493cf731fe15fd72||||||||||||||
 get_data_sched|function|394ab7d898c9bcf5||||||||||||||
 fit_model|function|37e6aed605e2d92b||||||||||||||
 update_data|function|c03c2bc1e71a2396||||||||||||||
-release_schedule|stem|d27a60d99710568b|513e89595f0fdbee|23929c9f0050bd3d|-66868720||t18757.2588072549s|253a8b79276e1ed4|185|rds|vector|||0.985||
-benchmark_file|stem|fbe627b0b4c70257|540616527aa15ad4|4e3739ef91745af0|1693336935|/home/runner/work/jobs-report/jobs-report/data/benchmark_revision.csv|t18757.2103427489s|a18ce3f40eb9a8e3|721|file|vector|||0.002||
-release|stem|23c415d44a0c0587|5982d584708d7fba|1c098c14e5546294|-1132719179||t18757.2588078568s|045b07e719c4cc68|120|rds|vector|||0.002||
-jobs_data|stem||0aaaa06c341b5ed2|16556cc826bcd0e9|-1642950649||||0|file|vector|||0.227||FRED API key must be set. See fredr_set_key.
+release_schedule|stem|d27a60d99710568b|513e89595f0fdbee|23929c9f0050bd3d|-66868720||t18757.6895691398s|253a8b79276e1ed4|185|rds|vector|||0.985||
+benchmark_file|stem|fbe627b0b4c70257|540616527aa15ad4|4e3739ef91745af0|1693336935|/home/runner/work/jobs-report/jobs-report/data/benchmark_revision.csv|t18757.6880030391s|a18ce3f40eb9a8e3|721|file|vector|||0.002||
+release|stem|23c415d44a0c0587|5982d584708d7fba|1c098c14e5546294|-1132719179||t18757.6895691398s|045b07e719c4cc68|120|rds|vector|||0.002||
+jobs_data|stem|510a246a9648b1a9|0aaaa06c341b5ed2|16556cc826bcd0e9|-1642950649|/home/runner/work/jobs-report/jobs-report/data/jobs.csv|t18757.689622752s|62b77018077f9ec8|14306|file|vector|||2.4||
+jobs_model|stem|bacfbcd67449eff4|d6620d1bf49dac1e|e72279d202a5ee43|-1137108759||t18757.6896790495s|0c99ad63d7e1e64f|1027937|rds|vector|||4.288||
+jobs_report|stem||4827669d14a27ce6|42274afa9b5c7371|-625610941||||0|file|vector|||0.035||there is no package called distill
