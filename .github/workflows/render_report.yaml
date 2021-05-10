@@ -79,10 +79,10 @@ jobs:
         continue-on-error: true
 
       - name: Checkout previous run
-        working-directory: jobs-report
         if: steps.runs-exist.outcome == 'success'
         uses: actions/checkout@v2
         with:
+          working-directory: jobs-report
           ref: targets-runs
           fetch-depth: 1
           path: .targets-runs
@@ -136,10 +136,10 @@ jobs:
           git push origin targets-runs
 
       - name: Checkout website
-        working-directory: .
         if: steps.runs-exist.outcome == 'success'
         uses: actions/checkout@v2
         with:
+          working-directory: .
           repository: CoryMcCartan/website/
           fetch-depth: 1
           path: website
