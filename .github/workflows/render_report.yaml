@@ -40,7 +40,6 @@ jobs:
       - uses: actions/checkout@v2
         with:
           path: jobs-report
-      - run: cd jobs-report
       - uses: r-lib/actions/setup-r@master
       - uses: r-lib/actions/setup-pandoc@master
 
@@ -59,6 +58,7 @@ jobs:
           restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-2-
 
       - name: Query dependencies
+        working-directory: jobs-report
         run: Rscript run.R deps
 
       - name: Cache packages
@@ -69,14 +69,17 @@ jobs:
           restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
 
       - name: Install packages
+        working-directory: jobs-report
         run: Rscript run.R install
 
       - name: Check if previous runs exist
+        working-directory: jobs-report
         id: runs-exist
         run: git ls-remote --exit-code --heads origin targets-runs
         continue-on-error: true
 
       - name: Checkout previous run
+        working-directory: jobs-report
         if: steps.runs-exist.outcome == 'success'
         uses: actions/checkout@v2
         with:
@@ -85,6 +88,7 @@ jobs:
           path: .targets-runs
 
       - name: Restore output files from the previous run
+        working-directory: jobs-report
         if: steps.runs-exist.outcome == 'success'
         run: |
           for (dest in scan(".targets-runs/.targets-files", what = character())) {
@@ -95,18 +99,22 @@ jobs:
         shell: Rscript {0}
 
       - name: Run targets pipeline
+        working-directory: jobs-report
         run: targets::tar_make()
         shell: Rscript {0}
         continue-on-error: true
 
       - name: Identify files that the targets pipeline produced
+        working-directory: jobs-report
         run: git ls-files -mo --exclude=renv > .targets-files
 
       - name: Create the runs branch if it does not already exist
+        working-directory: jobs-report
         if: steps.runs-exist.outcome != 'success'
         run: git checkout --orphan targets-runs
 
       - name: Put the worktree in the runs branch if the latter already exists
+        working-directory: jobs-report
         if: steps.runs-exist.outcome == 'success'
         run: |
           rm -r .git
@@ -114,6 +122,7 @@ jobs:
           rm -r .targets-runs
 
       - name: Upload latest run
+        working-directory: jobs-report
         run: |
           git config --local user.name "GitHub Actions"
           git config --local user.email "actions@github.com"
@@ -126,22 +135,22 @@ jobs:
           git commit -am "Run pipeline"
           git push origin targets-runs
 
-      - run: cd ..
       - name: Checkout website
+        working-directory: .
         if: steps.runs-exist.outcome == 'success'
         uses: actions/checkout@v2
         with:
           repository: CoryMcCartan/website/
           fetch-depth: 1
           path: website
-      - run: cd jobs-report
 
       - name: Make website report
+        working-directory: jobs-report
         run: Rscript run.R render ../website/content/projects
 
       - name: Deploy website
+        working-directory: website
         run: |
-          cd ../website
           git add .
           git commit -m "render jobs report"
           git push origin master
