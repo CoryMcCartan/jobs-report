@@ -1,7 +1,8 @@
 #!/usr/bin/env Rscript
 if (!requireNamespace("here", quietly=T)) install.packages("here")
 if (!requireNamespace("targets", quietly=T)) install.packages("targets")
-if (!requireNamespace("tarchetypes", quietly=T)) install.packages("tarchetypes")
+if (!requireNamespace("remotes", quietly=T)) install.packages("remotes")
+if (!requireNamespace("tarchetypes", quietly=T)) remotes::install_github("ropensci/tarchetypes")
 if (!requireNamespace("stringr", quietly=T)) install.packages("stringr")
 
 # For rendering to website

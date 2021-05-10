@@ -47,6 +47,13 @@ jobs:
           sudo apt-get install libssl-dev
           sudo apt-get install libzmq3-dev
 
+      - name: Cache packages
+        uses: actions/cache@v1
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.txt') }}
+          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-
+
       - name: Query dependencies
         shell: bash
         run: Rscript run.R deps
